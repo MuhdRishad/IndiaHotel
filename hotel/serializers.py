@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from hotel.models import Dishes
+from hotel.models import Dishes,Review
 from django.contrib.auth.models import User
 
             #NORMAL SERIALIZER
@@ -11,6 +11,11 @@ class DishSerializer(serializers.Serializer):
 
 
         #MODEL SERIALIZER
+
+
+
+
+
 class UserSerialization(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -30,3 +35,21 @@ class DishModelSerializer(serializers.ModelSerializer):
         if amount < 0:
             raise serializers.ValidationError('Negative price is not allowed')
         return data
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    dish = DishModelSerializer(many=False,read_only=True)
+    class Meta:
+        model = Review
+        fields = [
+            'dish',
+            'rating',
+            'comment',
+            'review_date'
+        ]
+
+    def create(self, validated_data):
+        user = self.context.get("user")
+        dish = self.context.get("dish")
+        return Review.objects.create(user=user,dish=dish,**validated_data)
+

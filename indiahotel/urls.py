@@ -20,6 +20,7 @@ from hotel.views import DishesView,DishDetailsView,MenuItemsView,MenuItemDetailV
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken.views import obtain_auth_token
 
+
 router = DefaultRouter()
 router.register("dishes",DishViewsetsView,basename="dishes")
 router.register("mdishes",DishModelViewSetView,basename="mdishes")
@@ -35,5 +36,7 @@ urlpatterns = [
     path('api/v2/hotels/',MenuItemsView.as_view()),
     path('api/v2/hotels/dishes/<int:id>', MenuItemDetailView.as_view()),
     path('api/v2/user/signup/',SignUpView.as_view()),
+
     path('api/v2/token',obtain_auth_token),
+
 ]+router.urls

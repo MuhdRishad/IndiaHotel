@@ -22,4 +22,5 @@ class Review(models.Model):
     review_date = models.DateField(auto_now_add=True,null=True)
 
     class Meta:
-        unique_together = ('user','dish')
+        unique_together = ('user','dish')   # ONE COMMENT ALLOWED FOR A USER  FOR A PERTICULAR DISH
+
